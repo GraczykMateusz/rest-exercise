@@ -3,6 +3,7 @@ package dev.graczykmateusz.restexercise.user;
 import dev.graczykmateusz.restexercise.user.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -23,7 +24,10 @@ public class UserService {
         try {
             return restTemplate.getForObject(uri, User.class);
         } catch (HttpClientErrorException e) {
-            throw new UserNotFoundException(login);
+            if (e.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
+                throw new UserNotFoundException(login);
+            }
+            throw e;
         }
     }
 }
