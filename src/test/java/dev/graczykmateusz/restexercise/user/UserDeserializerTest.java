@@ -3,6 +3,7 @@ package dev.graczykmateusz.restexercise.user;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.graczykmateusz.restexercise.user.exception.IllegalCalculationsException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -14,7 +15,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class UserDeserializerTest {
 
-    UserDeserializer underTest = new UserDeserializer();
+    UserDeserializer underTest;
+
+    @BeforeEach
+    void setUp() {
+        underTest = new UserDeserializer();
+    }
 
     @Test
     void shouldDeserializeJsonUser() throws IOException {
