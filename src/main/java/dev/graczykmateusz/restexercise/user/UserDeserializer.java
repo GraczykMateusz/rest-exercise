@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.graczykmateusz.restexercise.user.exception.IllegalCalculationsException;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 class UserDeserializer extends JsonDeserializer<User> {
 
@@ -18,10 +18,11 @@ class UserDeserializer extends JsonDeserializer<User> {
         JsonNode node = jp.getCodec().readTree(jp);
 
         Long id = node.get("id").asLong();
+        String login = node.get("login").asText();
         String name = node.get("name").asText();
         String type = node.get("type").asText();
         String avatarUrl = node.get("avatar_url").asText();
-        LocalDateTime createdAt = objectMapper.convertValue(node.get("created_at"), LocalDateTime.class);
+        Instant createdAt = objectMapper.convertValue(node.get("created_at"), Instant.class);
 
         int followers = node.get("followers").intValue();
         int publicRepos = node.get("public_repos").intValue();
@@ -29,6 +30,9 @@ class UserDeserializer extends JsonDeserializer<User> {
         if (followers == 0) throw new IllegalCalculationsException();
         double calculations = 6 / (double) followers * (2 + (double) publicRepos);
 
-        return new User(id, name, type, avatarUrl, createdAt, calculations);
+        return new User(
+                id, login, name,
+                type, avatarUrl, createdAt,
+                calculations);
     }
 }
