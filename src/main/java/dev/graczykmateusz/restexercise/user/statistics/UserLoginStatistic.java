@@ -1,4 +1,4 @@
-package dev.graczykmateusz.restexercise.user;
+package dev.graczykmateusz.restexercise.user.statistics;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

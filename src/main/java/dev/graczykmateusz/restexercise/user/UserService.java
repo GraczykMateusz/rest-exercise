@@ -1,11 +1,12 @@
 package dev.graczykmateusz.restexercise.user;
 
 import dev.graczykmateusz.restexercise.user.exception.UserNotFoundException;
+import dev.graczykmateusz.restexercise.user.statistics.UserLoginStatistic;
+import dev.graczykmateusz.restexercise.user.statistics.UserLoginStatisticRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
