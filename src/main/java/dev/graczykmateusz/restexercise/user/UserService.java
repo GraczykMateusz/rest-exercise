@@ -1,9 +1,10 @@
 package dev.graczykmateusz.restexercise.user;
 
 import dev.graczykmateusz.restexercise.user.exception.UserNotFoundException;
-import dev.graczykmateusz.restexercise.user.statistics.UserLoginStatistic;
-import dev.graczykmateusz.restexercise.user.statistics.UserLoginStatisticRepository;
+import dev.graczykmateusz.restexercise.user.statistics.event.UserStatisticEventPublisher;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,18 +15,20 @@ import java.net.URI;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+class UserService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
 
     private final RestTemplate restTemplate;
-    private final UserLoginStatisticRepository userLoginStatisticRepository;
+    private final UserStatisticEventPublisher userStatisticEventPublisher;
 
     @Value("${api.github.users.url}")
     private String apiGithubUsersUrl;
 
-    public User getUserData(String login) {
+    UserData getUserData(String login) {
         try {
             URI uri = URI.create(apiGithubUsersUrl + login);
-            return restTemplate.getForObject(uri, User.class);
+            return restTemplate.getForObject(uri, UserData.class);
         } catch (HttpClientErrorException e) {
             if (e.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
                 throw new UserNotFoundException(login);
@@ -34,14 +37,7 @@ public class UserService {
         }
     }
 
-    public void updateUserLoginStatistics(String login) {
-        UserLoginStatistic userLoginStatistic = userLoginStatisticRepository.getByLogin(login);
-        if (userLoginStatistic != null) {
-            int currentRequestCount = userLoginStatistic.getRequestCount();
-            userLoginStatistic.setRequestCount(++currentRequestCount);
-            userLoginStatisticRepository.save(userLoginStatistic);
-        } else  {
-            userLoginStatisticRepository.save(new UserLoginStatistic(login));
-        }
+    void updateUserLoginStatistic(String login) {
+        userStatisticEventPublisher.publishEvent(login);
     }
 }

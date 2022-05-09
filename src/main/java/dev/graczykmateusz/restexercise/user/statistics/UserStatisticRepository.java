@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserLoginStatisticRepository extends JpaRepository<UserLoginStatistic, Long> {
+interface UserStatisticRepository extends JpaRepository<UserStatistic, Long> {
 
-    UserLoginStatistic getByLogin(String login);
+    UserStatistic getByLogin(String login);
 }
