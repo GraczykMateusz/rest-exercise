@@ -1,6 +1,6 @@
 package dev.graczykmateusz.restexercise.user;
 
-import dev.graczykmateusz.restexercise.user.exception.IllegalCalculationsException;
+import dev.graczykmateusz.restexercise.user.exception.ZeroFollowersException;
 import dev.graczykmateusz.restexercise.user.exception.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +19,9 @@ class ExceptionAdvice {
         return getErrorMessage(e, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(IllegalCalculationsException.class)
-     ResponseEntity<String> handleBadRequestException(Exception e) {
-        return getErrorMessage(e, HttpStatus.BAD_REQUEST);
+    @ExceptionHandler(ZeroFollowersException.class)
+     ResponseEntity<String> handleUnprocessableEntityException(Exception e) {
+        return getErrorMessage(e, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     private ResponseEntity<String> getErrorMessage(Exception e, HttpStatus httpStatus) {

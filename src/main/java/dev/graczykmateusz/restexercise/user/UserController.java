@@ -15,7 +15,6 @@ class UserController {
 
     @GetMapping("/{login}")
     UserData getUserData(@PathVariable("login") String login) {
-        userService.updateUserLoginStatistic(login);
         return userService.getUserData(login);
     }
 }
