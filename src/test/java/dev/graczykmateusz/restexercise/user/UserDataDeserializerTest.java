@@ -13,9 +13,9 @@ import java.time.Instant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class UserDeserializerTest {
+class UserDataDeserializerTest {
 
-    UserDeserializer underTest;
+    private UserDeserializer underTest;
 
     @BeforeEach
     void setUp() {
@@ -30,7 +30,7 @@ class UserDeserializerTest {
         JsonParser jp = objectMapper.getFactory().createParser(file);
 
         //when
-        User actual = underTest.deserialize(jp, null);
+        UserData actual = underTest.deserialize(jp, null);
 
         //then
         Long id = 43554417L;
@@ -40,7 +40,8 @@ class UserDeserializerTest {
         String avatarUrl = "https://avatars.githubusercontent.com/u/43554417?v=4";
         Instant createdAt = Instant.parse("2018-09-24T20:41:09Z");
         double calculations = 38.0;
-        User expected = new User(
+
+        UserData expected = new UserData(
                 id, login, name,
                 type, avatarUrl, createdAt,
                 calculations);

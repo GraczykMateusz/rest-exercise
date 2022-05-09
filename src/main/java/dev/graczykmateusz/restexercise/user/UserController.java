@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/users")
-public class UserController {
+class UserController {
 
     private final UserService userService;
 
     @GetMapping("/{login}")
-    public User getUserData(@PathVariable("login") String login) {
-        userService.updateUserLoginStatistics(login);
+    UserData getUserData(@PathVariable("login") String login) {
+        userService.updateUserLoginStatistic(login);
         return userService.getUserData(login);
     }
 }

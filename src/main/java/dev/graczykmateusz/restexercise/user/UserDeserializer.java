@@ -10,10 +10,10 @@ import dev.graczykmateusz.restexercise.user.exception.IllegalCalculationsExcepti
 import java.io.IOException;
 import java.time.Instant;
 
-class UserDeserializer extends JsonDeserializer<User> {
+class UserDeserializer extends JsonDeserializer<UserData> {
 
     @Override
-    public User deserialize(JsonParser jp, DeserializationContext dc) throws IOException {
+    public UserData deserialize(JsonParser jp, DeserializationContext dc) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper().findAndRegisterModules();
         JsonNode node = jp.getCodec().readTree(jp);
 
@@ -30,7 +30,7 @@ class UserDeserializer extends JsonDeserializer<User> {
         if (followers == 0) throw new IllegalCalculationsException();
         double calculations = 6 / (double) followers * (2 + (double) publicRepos);
 
-        return new User(
+        return new UserData(
                 id, login, name,
                 type, avatarUrl, createdAt,
                 calculations);

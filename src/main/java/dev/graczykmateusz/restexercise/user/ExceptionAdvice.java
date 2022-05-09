@@ -25,7 +25,8 @@ class ExceptionAdvice {
     }
 
     private ResponseEntity<String> getErrorMessage(Exception e, HttpStatus httpStatus) {
-        LOG.error(e.toString());
+        String error = e.toString();
+        LOG.error(error);
         return ResponseEntity.status(httpStatus).body(e.getMessage());
     }
 }
