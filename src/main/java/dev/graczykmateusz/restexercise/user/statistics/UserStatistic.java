@@ -3,22 +3,22 @@ package dev.graczykmateusz.restexercise.user.statistics;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.DynamicInsert;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
-@Entity(name = "USERS_STATISTICS")
-@DynamicInsert
 @NoArgsConstructor
+@Entity
+@Table(name = "USERS_STATISTICS")
 class UserStatistic {
 
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @SequenceGenerator(
+            name = "USERS_STATISTICS_SEQUENCE",
+            sequenceName = "USERS_STATISTICS_SEQUENCE",
+            allocationSize = 1
+    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USERS_STATISTICS_SEQUENCE")
+    @Column(name = "ID", updatable = false)
     private Long id;
 
     @Column(name = "LOGIN", nullable = false)
