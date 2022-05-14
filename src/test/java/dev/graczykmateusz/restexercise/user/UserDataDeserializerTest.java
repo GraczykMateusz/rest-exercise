@@ -3,10 +3,11 @@ package dev.graczykmateusz.restexercise.user;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.graczykmateusz.restexercise.user.exception.ZeroFollowersException;
+import dev.graczykmateusz.restexercise.utils.GithubClientResponseProvider;
+import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.io.IOException;
 import java.time.Instant;
 
@@ -23,11 +24,11 @@ class UserDataDeserializerTest {
     }
 
     @Test
-    void shouldDeserializeJsonUser() throws IOException {
+    void shouldDeserializeJsonUser() throws IOException, JSONException {
         //given
-        File file = new File("src/test/resources/api-github-response/user-response.json");
+        String userNonZeroFollowersResponse = GithubClientResponseProvider.getUserNonZeroFollowersResponse();
         ObjectMapper objectMapper = new ObjectMapper();
-        JsonParser jp = objectMapper.getFactory().createParser(file);
+        JsonParser jp = objectMapper.getFactory().createParser(userNonZeroFollowersResponse);
 
         //when
         UserData actual = underTest.deserialize(jp, null);
@@ -50,17 +51,16 @@ class UserDataDeserializerTest {
     }
 
     @Test
-    void shouldThrowIllegalCalculationsExceptionWhenFollowersCountEqualsZero() throws IOException {
+    void shouldThrowIllegalCalculationsExceptionWhenFollowersCountEqualsZero() throws IOException, JSONException {
         //given
-        File file = new File("src/test/resources/api-github-response/user-zero-followers-response.json");
+        String userZeroFollowersResponse = GithubClientResponseProvider.getUserZeroFollowersResponse();
         ObjectMapper objectMapper = new ObjectMapper();
-        JsonParser jp = objectMapper.getFactory().createParser(file);
+        JsonParser jp = objectMapper.getFactory().createParser(userZeroFollowersResponse);
 
         //when
         //then
         assertThatThrownBy(() -> underTest.deserialize(jp, null))
                 .isInstanceOf(ZeroFollowersException.class)
-                .hasMessage("Cannot divide by zero!");
+                .hasMessage("Calculation cannot be performed because the number of followers is zero!");
     }
-
 }
