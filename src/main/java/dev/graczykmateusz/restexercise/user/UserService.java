@@ -3,12 +3,11 @@ package dev.graczykmateusz.restexercise.user;
 import dev.graczykmateusz.restexercise.user.exception.GithubClientException;
 import dev.graczykmateusz.restexercise.user.exception.UserNotFoundException;
 import dev.graczykmateusz.restexercise.user.statistics.event.UserStatisticEventPublisher;
+import java.net.URI;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-
-import java.net.URI;
 
 @Service
 class UserService {

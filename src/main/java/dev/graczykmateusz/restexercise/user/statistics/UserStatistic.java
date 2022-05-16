@@ -1,10 +1,15 @@
 package dev.graczykmateusz.restexercise.user.statistics;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.persistence.*;
 
 @NoArgsConstructor
 @Entity
@@ -13,9 +18,9 @@ class UserStatistic {
 
     @Id
     @SequenceGenerator(
-            name = "USERS_STATISTICS_SEQUENCE",
-            sequenceName = "USERS_STATISTICS_SEQUENCE",
-            allocationSize = 1
+        name = "USERS_STATISTICS_SEQUENCE",
+        sequenceName = "USERS_STATISTICS_SEQUENCE",
+        allocationSize = 1
     )
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USERS_STATISTICS_SEQUENCE")
     @Column(name = "ID", updatable = false)

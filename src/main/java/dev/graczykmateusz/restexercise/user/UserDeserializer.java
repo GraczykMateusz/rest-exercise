@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.graczykmateusz.restexercise.user.exception.ZeroFollowersException;
-
 import java.io.IOException;
 import java.time.Instant;
 
@@ -29,13 +28,13 @@ class UserDeserializer extends JsonDeserializer<UserData> {
 
         if (followers == 0) {
             throw new ZeroFollowersException(
-                    "Calculation cannot be performed because the number of followers is zero!");
+                "Calculation cannot be performed because the number of followers is zero!");
         }
         double calculations = 6 / (double) followers * (2 + (double) publicRepos);
 
         return new UserData(
-                id, login, name,
-                type, avatarUrl, createdAt,
-                calculations);
+            id, login, name,
+            type, avatarUrl, createdAt,
+            calculations);
     }
 }
