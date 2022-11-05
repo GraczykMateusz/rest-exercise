@@ -23,7 +23,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.headers().frameOptions().sameOrigin();
+
+        http.csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/actuator/**").permitAll()
                 .antMatchers("/**").hasRole("ADMIN")
                 .and()
