@@ -1,5 +1,7 @@
 # Rest exercise
 
+**❗ (update) This project was upgraded, see: https://github.com/GraczykMateusz/github-statistics** ❗
+
 #### The application need to be run with h2 profile to execute h2 database.
 
 ------------
